@@ -1,0 +1,8 @@
+---
+- hosts: ansible2
+  become: yes
+  tasks:
+  - name: remove multiple file
+    file:
+      path: /root/ansible/
+      state: absent

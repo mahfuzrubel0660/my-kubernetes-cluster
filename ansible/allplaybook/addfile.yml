@@ -1,0 +1,13 @@
+---
+- hosts: ansible2
+  become: yes
+  tasks:
+  - name: create multiple file
+    file:
+      path: /root/ansible/{{ item }}
+      state: touch
+      mode: 0755
+      owner: root
+    loop:
+    - file1
+    - file2

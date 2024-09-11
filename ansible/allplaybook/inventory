@@ -1,0 +1,7 @@
+ansible1 ansible_host=36.255.69.183 ansible_connection=ssh ansible_user=root ansible_password=Br!ll!@nt-mahfuz
+ansible2 ansible_host=36.255.69.184 ansible_connection=ssh ansible_user=root ansible_password=Br!ll!@nt-mahfuz
+
+
+[ansible_server]
+ansible1
+ansible2

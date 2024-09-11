@@ -1,0 +1,13 @@
+---
+- hosts: ansible2
+  become: yes
+  tasks:
+  - name: create multiple file
+    copy:
+      dest: /root/ansible/{{ item }}
+      content: |
+        this is first line
+        this is second line
+    with_items:
+    - file1
+    - file2

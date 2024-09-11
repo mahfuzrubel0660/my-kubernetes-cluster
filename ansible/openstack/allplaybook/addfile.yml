@@ -1,0 +1,31 @@
+
+---
+- hosts: ansible2
+  become: yes
+  tasks:
+  - name: create multiple file
+    file:
+      path: /root/ansible/{{ item }}
+      state: touch
+      mode: 0755
+      owner: test
+    loop:
+    - file1
+    - file2
+    copy:
+      dest: "/your path"
+      content: |
+        line 01
+        line 02copy:
+      dest: "/your path"
+      content: |
+        line 01
+        line 02copy:
+      dest: "/your path"
+      content: |
+        line 01
+        line 02copy:
+      dest: "/your path"
+      content: |
+        line 01
+        line 02OB

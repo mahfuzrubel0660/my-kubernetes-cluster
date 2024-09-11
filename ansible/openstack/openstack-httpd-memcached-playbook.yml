@@ -1,0 +1,15 @@
+---
+- name: Dashboard restart
+  hosts: controller1,controller2,controller3
+  serial: 1
+  #  become: true
+  tasks:
+    - name: httpd and memcache restart
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: true
+      become: true
+      loop:
+      - httpd
+      - memcached
