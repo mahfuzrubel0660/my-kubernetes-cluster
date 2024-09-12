@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pod-net-admin
+  name: pod-net-admin
+  namespace: test
+spec:
+  containers:
+  - image: nginx
+    name: pod-net-admin
+    resources: {}
+    securityContext:
+      capabilities:
+        add: ["NET_ADMIN", "SYS_TIME"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

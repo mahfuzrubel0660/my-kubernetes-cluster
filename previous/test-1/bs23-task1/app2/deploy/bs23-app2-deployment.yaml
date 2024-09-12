@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bs23-app2
+  labels:
+    app: bs23-app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bs23-app2
+  template:
+    metadata:
+      labels:
+        app: bs23-app2
+    spec:
+      nodeSelector:
+              kubernetes.io/hostname: mn-worker2   
+      containers:
+      - name: bs23-app2
+        image: munnaeeebd/bs23:app2
+        ports:
+        - containerPort: 80

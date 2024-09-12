@@ -1,0 +1,21 @@
+
+pipeline {
+    agent any
+    stages { 
+       stage('List Pods') {
+        steps {
+        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubecred', namespace: '', serverUrl: 'https://36.255.68.192:6443']]) {
+        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
+        sh 'chmod u+x ./kubectl' 
+        sh './kubectl get deployment'
+        sh './kubectl create deployment mahfuz-nginx --image=mahfuzrubel0660/nginx:11'
+     //:x   sh './kubectl set image deployment/mahfuz-nginx nginx=mahfuzrubel0660/nginx:$BUILD_NUMBER'
+    // some block
+    
+        
+
+}
+}
+}
+}
+}

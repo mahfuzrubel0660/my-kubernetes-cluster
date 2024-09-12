@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  namespace: whatismyip
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - whatismyip.brilliant.com.bd
+  rules:
+  - host: whatismyip.brilliant.com.bd
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx-svc
+          servicePort: 80
+

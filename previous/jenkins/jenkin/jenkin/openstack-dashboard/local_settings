@@ -1,0 +1,28 @@
+OPENSTACK_HOST = "controller1"
+OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
+OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
+
+ALLOWED_HOSTS = ['*', ]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+CACHES = {
+    'default': {
+         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+         'LOCATION': 'controller1:11211',
+    }
+}
+
+OPENSTACK_API_VERSIONS = {
+    "data-processing": 1.1,
+    "identity": 3,
+    "image": 2,
+    "volume": 2,
+    "compute": 2,
+}
+
+OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'Default'
+
+DROPDOWN_MAX_ITEMS = 100
+
+TIME_ZONE = "Asia/Dhaka"

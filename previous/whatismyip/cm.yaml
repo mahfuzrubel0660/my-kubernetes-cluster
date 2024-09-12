@@ -1,0 +1,61 @@
+apiVersion: v1
+data:
+  index.html: |+
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <title>Getting Clients IP</title>
+        <style>
+            p, h1 {
+                color: green;
+            }
+        </style>
+        <script src=
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        </script>
+
+        <script>
+            /* Add "https://api.ipify.org?format=json" statement
+               this will communicate with the ipify servers in
+               order to retrieve the IP address $.getJSON will
+               load JSON-encoded data from the server using a
+               GET HTTP request */
+
+            $.getJSON("https://api.ipify.org?format=json",
+                                              function(data) {
+
+                // Setting text of element P with id gfg
+                $("#gfg").html(data.ip);
+            })
+        </script>
+    </head>
+
+    <body>
+        <center>
+            <h1>Grettings From  mahfuz</h1>
+            <h3>Your Public IP Address is:</h3>
+
+            <p id="gfg"></p>
+
+        </center>
+    </body>
+
+    </html>
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-04-17T18:52:42Z"
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:index.html: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2022-04-17T18:52:42Z"
+  name: nginx-config
+  namespace: whatismyip
+  resourceVersion: "122940352"
+  uid: 54fc7d48-ace6-4582-8a46-544b09e8699b

@@ -1,0 +1,9 @@
+export OS_USERNAME=mahfuz
+export OS_PASSWORD=Br!ll!@nt-mahfuz
+export OS_PROJECT_NAME=Mahfuz
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_AUTH_URL=http://cloud.brilliant.com.bd:5000/v3
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+export OS_AUTH_TYPE=password

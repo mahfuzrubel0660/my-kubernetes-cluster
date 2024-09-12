@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+
+  name: nagios-deployment
+  namespace: nagios
+
+spec:
+
+  replicas: 1
+
+  selector:
+
+    matchLabels:
+
+      app: nagios-core
+
+  template:
+
+    metadata:
+
+      labels:
+
+        app: nagios-core
+
+    spec:
+
+      containers:
+
+        - name: nagios-container
+
+          image: jasonrivers/nagios:4.1.1
+          volumeMounts:
+          - name: config-volume
+            mountPath: /usr/local/nagios/etc/objects/
+      volumes:
+        - name: config-volume
+          configMap:
+           # Provide the name of the ConfigMap containing the files you want
+           # to add to the container
+            name: nagios-cm

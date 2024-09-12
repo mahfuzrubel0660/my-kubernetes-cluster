@@ -1,0 +1,4818 @@
+[debug] Created tunnel using local port: '36016'
+
+[debug] SERVER: "127.0.0.1:36016"
+
+[debug] Original chart version: ""
+[debug] CHART PATH: /root/monasca/monasca-dump/monasca
+
+NAME:   monasca
+REVISION: 1
+RELEASED: Sun Feb 23 12:08:31 2020
+CHART: monasca-0.6.4
+USER-SUPPLIED VALUES:
+agent:
+  cadvisor:
+    enable_minimum_whitelist: false
+    enabled: true
+    timeout: 3
+  collector:
+    check_freq: 30
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/agent-collector
+      tag: master-20180112-162543
+    num_collector_threads: 1
+    pool_full_max_retries: 4
+    sub_collection_warn: 6
+  daemonset_enabled: false
+  daemonset_toleration:
+    enabled: false
+  deployment_enabled: false
+  forwarder:
+    backlog_send_rate: 5
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/agent-forwarder
+      tag: master-20180206-002800
+    max_batch_size: 0
+    max_measurement_buffer_size: -1
+    non_local_traffic: "true"
+  insecure: true
+  keystone:
+    password: password
+    project_domain_name: Default
+    project_name: monasca
+    user_domain_name: Default
+    username: monasca
+  kubernetes:
+    enable_minimum_whitelist: false
+    kubernetes_labels: app
+    timeout: 3
+  kubernetes_api:
+    kubernetes_labels: app
+    storage:
+      report: true
+    timeout: 3
+  log_level: WARN
+  name: agent
+  plugins:
+    enabled: false
+  prometheus:
+    auto_detect_pod_endpoints: true
+    auto_detect_service_endpoints: true
+    kubernetes_labels: app
+    timeout: 3
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  serviceAccount: ""
+  termination_grace_period: 30
+aggregator:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/aggregator
+    tag: 0.2.0
+  metric_configuration:
+    aggregation-specifications.yaml: |
+      aggregationSpecifications:
+      - aggregatedMetricName: deployment.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.system_time
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.system_time
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.system_time
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [pod_name]
+        name: cpu.system_time
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.system_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.system_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.system_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: cpu.system_time_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.total_time
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.total_time
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.total_time
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [pod_name]
+        name: cpu.total_time
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.total_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.total_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.total_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: cpu.total_time_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.user_time
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.user_time
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.user_time
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [pod_name]
+        name: cpu.user_time
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.user_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.user_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.user_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: cpu.user_time_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.cache_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.cache_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.cache_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.cache_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.fail_count
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.fail_count
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.fail_count
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.fail_count
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.rss_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.rss_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.rss_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.rss_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.swap_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.swap_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.swap_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.swap_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.used_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.used_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.used_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.used_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_bytes_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_dropped_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_dropped_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_errors
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_errors
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_errors
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_errors
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_errors_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_bytes_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_dropped_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_dropped_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_errors
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_errors
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_errors
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_errors
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_errors_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: restart_count
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: restart_count
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: restart_count
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [pod_name]
+        name: restart_count
+        rollup: {function: sum}
+  name: aggregator
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  window_lag: 2
+  window_size: 60
+alarm_definition_controller:
+  controller_enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/alarm-definition-controller
+    tag: 1.1.0
+  keystone:
+    domain_name: Default
+    password: password
+    tenant_name: admin
+    username: monasca-agent
+  namespace: ""
+  resource_enabled: false
+  resources:
+    limits:
+      cpu: 35m
+      memory: 32Mi
+    requests:
+      cpu: 20m
+      memory: 16Mi
+  version: v1
+alarms:
+  definitions_configuration:
+    definitions.yml.j2: |
+      notifications:
+        - name: "{{ NOTIFICATION_NAME | default('default') }}"
+          type: "{{ NOTIFICATION_TYPE | default('email') }}"
+          address: "{{ NOTIFICATION_ADDRESS | default('root@localhost') }}"
+
+      alarm_definitions:
+        - name: "Kubernetes Node Ready Status"
+          expression: "max(kubernetes.node.ready_status) > 0"
+          description: "Alarms when the Kubernetes Node is not ready"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Kubelet Status"
+          expression: "max(kubelet.health_status) > 0"
+          description: "Alarms when the kubelet has a bad health status"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes API Status"
+          expression: "max(kubernetes.api.health_status) > 0"
+          description: "Alarms when the Kubernetes API has a bad health status"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Node Disk Pressure"
+          expression: "max(kubernetes.node.disk_pressure) > 0"
+          description: "Alarms when the Kubernetes node has memory pressure"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Node CPU Pressure"
+          expression: "max(kubernetes.node.memory_pressure) > 0"
+          description: "Alarms when the Kubernetes node has disk pressure"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Out Of Disk"
+          expression: "max(kubernetes.node.out_of_disk) > 0"
+          description: "Alarms when the Kubernetes node is out of disk"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Component Status"
+          expression: "max(kubernetes.component_status) > 0"
+          description: "Alarms when a Kubernetes component has a bad status"
+          severity: "HIGH"
+          match_by:
+            - "component_name"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/alarms
+    tag: 1.2.0
+  keystone:
+    password: password
+    project_domain_name: Default
+    project_name: admin
+    user_domain_name: Default
+    username: monasca
+  name: alarms
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  wait:
+    delay: 5
+    enabled: true
+    retries: 24
+api:
+  auth_disabled: false
+  gunicorn_workers: 1
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/api
+    tag: master-20180105-072513
+  influxdb:
+    database: mon
+    password: password
+    user: mon_api
+  keystone:
+    auth_url: http://cloud.brilliant.com.bd:5000
+    identity_url: http://cloud.brilliant.com.bd:5000
+    password: M0n!#sca*_p@ss
+    tenant_name: service
+    username: monasca
+  logging:
+    log_level_console: WARN
+    log_level_root: WARN
+  mysql:
+    password:
+      secret_key: password
+    username:
+      secret_key: username
+  mysql_disabled: false
+  name: api
+  replicaCount: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    port: 8070
+    type: ClusterIP
+  side_container:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+      repository: timothyb89/monasca-sidecar
+      tag: 1.0.0
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+  static_service:
+    enabled: false
+    name: monasca-api
+    port: 8070
+    type: ClusterIP
+charts:
+  influxdb:
+    config:
+      data:
+        cache_max_memory_size: "1073741824"
+      http:
+        bind_address: 8089
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+      repo: influxdb
+      tag: 1.3.5-alpine
+    persistence:
+      accessMode: ReadWriteOnce
+      enabled: true
+      mountPath: /var/lib/influxdb
+      size: 100Gi
+      storageClass: gold
+    resources:
+      requests:
+        cpu: 0.1
+        memory: 256Mi
+  kafka:
+    enabled: false
+  mysql:
+    enabled: true
+    imagePullPolicy: IfNotPresent
+    imageTag: "5.6"
+    mysqlRootPassword: secretmysql
+    persistence:
+      accessMode: ReadWriteOnce
+      enabled: true
+      mountPath: /var/lib/mysql
+      size: 10Gi
+      storageClass: gold
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    users:
+      api:
+        password: password
+        username: monapi
+      grafana:
+        password: password
+        username: grafana
+      keystone:
+        password: keystone
+        username: keystone
+      notification:
+        password: password
+        username: notification
+      thresh:
+        password: password
+        username: thresh
+  storm:
+    enabled: false
+  zookeeper:
+    enabled: false
+cleanup:
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/job-cleanup
+    tag: 1.2.1
+  name: cleanup
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  serviceAccount: default
+  wait:
+    delay: "5.0"
+    retries: "24"
+    timeout: "10"
+client:
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/client
+    tag: 1.6.0
+  keystone:
+    password: M0n!#sca*_p@ss
+    project_domain_name: Default
+    project_name: service
+    user_domain_name: Default
+    username: monasca
+  name: client
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 200m
+      memory: 64Mi
+forwarder:
+  config:
+    monasca_project_id: 3564760a3dd44ae9bd6618d442fd758c
+    monasca_role: monasca-agent
+    remote_api_url: http://monasca:8070/v2.0
+    use_insecure: false
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/forwarder
+    tag: 1.0.1
+  logging:
+    debug: false
+    verbose: true
+  metric_configuration:
+    forwarder_metric_match.yml: |
+      metrics_to_forward:
+        - name: kubernetes.node.allocatable.cpu_agg
+        - name: cpu.total_time_sec_agg
+  name: forwarder
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+grafana:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/grafana
+    tag: 4.0.0-1.4.1
+  local_mysql_enabled: true
+  mysql:
+    password:
+      secret_key: password
+    port: 3306
+    username:
+      secret_key: username
+  name: grafana
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: true
+    size: 1Gi
+    storageClass: gold
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+  service:
+    port: 3000
+    type: NodePort
+grafana_init:
+  datasource:
+    access_mode: proxy
+    type: monasca
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/grafana-init
+    tag: 1.2.1
+  log_level: INFO
+  password: password
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  username: monasca-agent
+influx_init:
+  default_retention: 45d
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/influxdb-init
+    tag: 1.0.3
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  shard_duration: 1d
+kafka:
+  enabled: false
+  init:
+    topics:
+    - metrics:64:1
+    - alarm-state-transitions:12:1
+    - alarm-notifications:12:1
+    - retry-notifications:3:1
+    - events:12:1
+    - 60-seconds-notifications:3:1
+    - kafka-health-check:1:1
+  overrideUri: standalone-kafka-headless:9092
+keystone:
+  bootstrap:
+    password: secretadmin
+    project: admin
+    region: RegionOne
+    role: admin
+    service: keystone
+    user: admin
+  database_backend: mysql
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/keystone
+    tag: 1.1.3
+  mysql:
+    database: keystone
+    password:
+      secret_key: password
+    username:
+      secret_key: username
+  name: keystone
+  override:
+    admin_url: ""
+    public_url: ""
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    admin_port: 5000
+    port: 35357
+    type: ClusterIP
+  static_service:
+    admin_port: 5000
+    enabled: false
+    name: keystone
+    port: 35357
+    type: ClusterIP
+  users:
+    admin:
+      password: secretadmin
+    demo:
+      password: secretadmin
+    mini_mon:
+      password: password
+    monasca_agent:
+      password: password
+    monasca_read_only:
+      password: password
+memcached:
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: memcached
+    tag: 1.5.0-alpine
+  name: memcached
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 32Mi
+  service:
+    type: ClusterIP
+mysql_init:
+  create_mon_users: true
+  disable_remote_root: false
+  enabled: true
+  grafana_db_enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/mysql-init
+    tag: 1.5.4
+  keystone_db_enabled: false
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+notification:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/notification
+    tag: master-20171004-112434
+  log_level: WARN
+  mysql:
+    password:
+      secret_key: password
+    port: "3306"
+    username:
+      secret_key: username
+  name: notification
+  plugin_config:
+    email:
+      defined: false
+    hipchat:
+      timeout: 5
+    slack:
+      timeout: 5
+    webhook:
+      timeout: 5
+  plugins: slack,webhook
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+persister:
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/persister
+    tag: master-20180111-234331
+  influxdb:
+    database: mon
+    password: password
+    user: mon_persister
+  kafka:
+    alarm_history:
+      batch_size: 2000
+      wait_time: 15
+    metrics:
+      batch_size: 5000
+      wait_time: 15
+  logging:
+    debug: false
+    verbose: true
+  name: persister
+  replicaCount: 6
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+rbac:
+  create: true
+smoke_tests:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/smoke-tests
+    tag: 1.0.3
+  keystone:
+    domain_name: Default
+    password: password
+    tenant_name: admin
+    username: monasca
+  name: smoke-tests
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+storm:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/storm
+    tag: 1.1.1-1.0.11
+  name: storm
+  nimbus_resources:
+    limits:
+      cpu: 500m
+      memory: 2Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: true
+    size: 4Gi
+    storageClass: gold
+  service:
+    port: 6627
+    type: ClusterIP
+  supervisor_resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 250m
+      memory: 2Gi
+  thresh:
+    bolt:
+      aggregationBoltTasks: 2
+      aggregationBoltThreads: 2
+      alarmCreationBoltTasks: 2
+      alarmCreationBoltThreads: 2
+      eventBoltTasks: 2
+      eventBoltThreads: 2
+      filteringBoltTasks: 2
+      filteringBoltThreads: 2
+      thresholdingBoltTasks: 2
+      thresholdingBoltThreads: 2
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/thresh
+      tag: master-20171205-104226
+    mysql:
+      port: "3306"
+    name: thresh
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 256m
+        memory: 256Mi
+    secretSuffix: mysql-thresh-secret
+    spout:
+      eventSpoutTasks: 2
+      eventSpoutThreads: 2
+      metricSpoutTasks: 2
+      metricSpoutThreads: 2
+    wait:
+      delay: 5
+      retries: 24
+      timeout: 10
+tempest_tests:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/tempest-tests
+    tag: 1.0.2
+  keystone:
+    admin_domain_name: Default
+    admin_password: password
+    admin_project_name: admin
+    admin_username: admin
+    alt_password: password
+    alt_tenant_name: mini-mon
+    alt_username: mini-mon
+    auth_use_ssl: false
+    keystone_port: 35357
+    keystone_server: keystone
+    os_domain_name: Default
+    os_password: password
+    os_tenant_name: monasca
+    os_username: monasca
+    use_dynamic_creds: true
+  name: tempest-tests
+  ostestr_regex: monasca_tempest_tests
+  stay_alive_on_failure: false
+  wait:
+    delay: 5
+    enabled: true
+    retries: 24
+thresh:
+  bolt:
+    aggregationBoltTasks: 2
+    aggregationBoltThreads: 2
+    alarmCreationBoltTasks: 2
+    alarmCreationBoltThreads: 2
+    eventBoltTasks: 2
+    eventBoltThreads: 2
+    filteringBoltTasks: 2
+    filteringBoltThreads: 2
+    thresholdingBoltTasks: 2
+    thresholdingBoltThreads: 2
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/thresh
+    tag: master-20171205-104226
+  jmx:
+    enabled: false
+    port: 9090
+  memory_ratio: 0.85
+  mysql:
+    password:
+      secret_key: password
+    port: 3306
+    username:
+      secret_key: username
+  name: thresh
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 256Mi
+  secretSuffix: mysql-thresh-secret
+  spout:
+    eventSpoutTasks: 2
+    eventSpoutThreads: 2
+    metricSpoutTasks: 2
+    metricSpoutThreads: 2
+  stack_size: 1024k
+  use_local: true
+  wait:
+    delay: 5
+    retries: 24
+    timeout: 10
+zookeeper:
+  enabled: false
+  overrideUri: standalone-kafka-zookeeper-headless:2181
+
+COMPUTED VALUES:
+agent:
+  cadvisor:
+    enable_minimum_whitelist: false
+    enabled: true
+    timeout: 3
+  collector:
+    check_freq: 30
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/agent-collector
+      tag: master-20180112-162543
+    num_collector_threads: 1
+    pool_full_max_retries: 4
+    sub_collection_warn: 6
+  daemonset_enabled: false
+  daemonset_toleration:
+    enabled: false
+  deployment_enabled: false
+  forwarder:
+    backlog_send_rate: 5
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/agent-forwarder
+      tag: master-20180206-002800
+    max_batch_size: 0
+    max_measurement_buffer_size: -1
+    non_local_traffic: "true"
+  insecure: true
+  keystone:
+    password: password
+    project_domain_name: Default
+    project_name: monasca
+    user_domain_name: Default
+    username: monasca
+  kubernetes:
+    enable_minimum_whitelist: false
+    kubernetes_labels: app
+    timeout: 3
+  kubernetes_api:
+    kubernetes_labels: app
+    storage:
+      report: true
+    timeout: 3
+  log_level: WARN
+  name: agent
+  plugins:
+    enabled: false
+  prometheus:
+    auto_detect_pod_endpoints: true
+    auto_detect_service_endpoints: true
+    kubernetes_labels: app
+    timeout: 3
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  serviceAccount: ""
+  termination_grace_period: 30
+aggregator:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/aggregator
+    tag: 0.2.0
+  metric_configuration:
+    aggregation-specifications.yaml: |
+      aggregationSpecifications:
+      - aggregatedMetricName: deployment.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.system_time
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.system_time
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.system_time
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.system_time_agg
+        filteredMetricName: pod.cpu.system_time
+        function: max
+        groupedDimensions: [pod_name]
+        name: cpu.system_time
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.system_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.system_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.system_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.system_time_sec_agg
+        filteredMetricName: pod.cpu.system_time_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: cpu.system_time_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.total_time
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.total_time
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.total_time
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.total_time_agg
+        filteredMetricName: pod.cpu.total_time
+        function: max
+        groupedDimensions: [pod_name]
+        name: cpu.total_time
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.total_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.total_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.total_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.total_time_sec_agg
+        filteredMetricName: pod.cpu.total_time_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: cpu.total_time_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.user_time
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.user_time
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.user_time
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.user_time_agg
+        filteredMetricName: pod.cpu.user_time
+        function: max
+        groupedDimensions: [pod_name]
+        name: cpu.user_time
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: cpu.user_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: cpu.user_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: cpu.user_time_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.cpu.user_time_sec_agg
+        filteredMetricName: pod.cpu.user_time_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: cpu.user_time_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.cache_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.cache_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.cache_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.cache_bytes_agg
+        filteredMetricName: pod.mem.cache_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.cache_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.fail_count
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.fail_count
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.fail_count
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.fail_count_agg
+        filteredMetricName: pod.mem.fail_count
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.fail_count
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.rss_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.rss_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.rss_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.rss_bytes_agg
+        filteredMetricName: pod.mem.rss_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.rss_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.swap_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.swap_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.swap_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.swap_bytes_agg
+        filteredMetricName: pod.mem.swap_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.swap_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: mem.used_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: mem.used_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: mem.used_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.mem.used_bytes_agg
+        filteredMetricName: pod.mem.used_bytes
+        function: avg
+        groupedDimensions: [pod_name]
+        name: mem.used_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_bytes_agg
+        filteredMetricName: pod.net.in_bytes
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_bytes_sec_agg
+        filteredMetricName: pod.net.in_bytes_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_bytes_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_dropped_packets_agg
+        filteredMetricName: pod.net.in_dropped_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_dropped_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_dropped_packets_sec_agg
+        filteredMetricName: pod.net.in_dropped_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_dropped_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_errors
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_errors
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_errors
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_errors_agg
+        filteredMetricName: pod.net.in_errors
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_errors
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_errors_sec_agg
+        filteredMetricName: pod.net.in_errors_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_errors_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_packets_agg
+        filteredMetricName: pod.net.in_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.in_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.in_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.in_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.in_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.in_packets_sec_agg
+        filteredMetricName: pod.net.in_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.in_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_bytes
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_bytes_agg
+        filteredMetricName: pod.net.out_bytes
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_bytes
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_bytes_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_bytes_sec_agg
+        filteredMetricName: pod.net.out_bytes_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_bytes_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_dropped_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_dropped_packets_agg
+        filteredMetricName: pod.net.out_dropped_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_dropped_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_dropped_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_dropped_packets_sec_agg
+        filteredMetricName: pod.net.out_dropped_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_dropped_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_errors
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_errors
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_errors
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_errors_agg
+        filteredMetricName: pod.net.out_errors
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_errors
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_errors_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_errors_sec_agg
+        filteredMetricName: pod.net.out_errors_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_errors_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_packets
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_packets
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_packets
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_packets_agg
+        filteredMetricName: pod.net.out_packets
+        function: max
+        groupedDimensions: [pod_name]
+        name: net.out_packets
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [deployment, pod_name]
+        name: net.out_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [daemon_set, pod_name]
+        name: net.out_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [namespace, pod_name]
+        name: net.out_packets_sec
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.net.out_packets_sec_agg
+        filteredMetricName: pod.net.out_packets_sec
+        function: avg
+        groupedDimensions: [pod_name]
+        name: net.out_packets_sec
+        rollup: {function: sum}
+      - aggregatedMetricName: deployment.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [deployment, pod_name]
+        name: restart_count
+        rollup:
+          function: sum
+          groupedDimensions: [deployment]
+      - aggregatedMetricName: daemon_set.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [daemon_set, pod_name]
+        name: restart_count
+        rollup:
+          function: sum
+          groupedDimensions: [daemon_set]
+      - aggregatedMetricName: namespace.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [namespace, pod_name]
+        name: restart_count
+        rollup:
+          function: sum
+          groupedDimensions: [namespace]
+      - aggregatedMetricName: cluster.restart_count_agg
+        filteredMetricName: pod.restart_count
+        function: max
+        groupedDimensions: [pod_name]
+        name: restart_count
+        rollup: {function: sum}
+  name: aggregator
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  window_lag: 2
+  window_size: 60
+alarm_definition_controller:
+  controller_enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/alarm-definition-controller
+    tag: 1.1.0
+  keystone:
+    domain_name: Default
+    password: password
+    tenant_name: admin
+    username: monasca-agent
+  name: adc
+  namespace: ""
+  resource_enabled: false
+  resources:
+    limits:
+      cpu: 35m
+      memory: 32Mi
+    requests:
+      cpu: 20m
+      memory: 16Mi
+  version: v1
+alarms:
+  definitions_configuration:
+    definitions.yml.j2: |
+      notifications:
+        - name: "{{ NOTIFICATION_NAME | default('default') }}"
+          type: "{{ NOTIFICATION_TYPE | default('email') }}"
+          address: "{{ NOTIFICATION_ADDRESS | default('root@localhost') }}"
+
+      alarm_definitions:
+        - name: "Kubernetes Node Ready Status"
+          expression: "max(kubernetes.node.ready_status) > 0"
+          description: "Alarms when the Kubernetes Node is not ready"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Kubelet Status"
+          expression: "max(kubelet.health_status) > 0"
+          description: "Alarms when the kubelet has a bad health status"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes API Status"
+          expression: "max(kubernetes.api.health_status) > 0"
+          description: "Alarms when the Kubernetes API has a bad health status"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Node Disk Pressure"
+          expression: "max(kubernetes.node.disk_pressure) > 0"
+          description: "Alarms when the Kubernetes node has memory pressure"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Node CPU Pressure"
+          expression: "max(kubernetes.node.memory_pressure) > 0"
+          description: "Alarms when the Kubernetes node has disk pressure"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Out Of Disk"
+          expression: "max(kubernetes.node.out_of_disk) > 0"
+          description: "Alarms when the Kubernetes node is out of disk"
+          severity: "HIGH"
+          match_by:
+            - "hostname"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+        - name: "Kubernetes Component Status"
+          expression: "max(kubernetes.component_status) > 0"
+          description: "Alarms when a Kubernetes component has a bad status"
+          severity: "HIGH"
+          match_by:
+            - "component_name"
+          alarm_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          ok_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+          undetermined_actions:
+            - "{{ NOTIFICATION_NAME | default('default') }}"
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/alarms
+    tag: 1.2.0
+  keystone:
+    password: password
+    project_domain_name: Default
+    project_name: admin
+    user_domain_name: Default
+    username: monasca
+  name: alarms
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  wait:
+    delay: 5
+    enabled: true
+    retries: 24
+api:
+  auth_disabled: false
+  gunicorn_workers: 1
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/api
+    tag: master-20180105-072513
+  influxdb:
+    database: mon
+    password: password
+    user: mon_api
+  keystone:
+    auth_url: http://cloud.brilliant.com.bd:5000
+    identity_url: http://cloud.brilliant.com.bd:5000
+    password: M0n!#sca*_p@ss
+    tenant_name: service
+    username: monasca
+  logging:
+    log_level_console: WARN
+    log_level_root: WARN
+  mysql:
+    password:
+      secret_key: password
+    username:
+      secret_key: username
+  mysql_disabled: false
+  name: api
+  replicaCount: 3
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    port: 8070
+    type: ClusterIP
+  side_container:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+      repository: timothyb89/monasca-sidecar
+      tag: 1.0.0
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+  static_service:
+    enabled: false
+    name: monasca-api
+    port: 8070
+    type: ClusterIP
+charts:
+  influxdb:
+    config:
+      data:
+        cache_max_memory_size: "1073741824"
+      http:
+        bind_address: 8089
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+      repo: influxdb
+      tag: 1.3.5-alpine
+    persistence:
+      accessMode: ReadWriteOnce
+      enabled: true
+      mountPath: /var/lib/influxdb
+      size: 100Gi
+      storageClass: gold
+    resources:
+      requests:
+        cpu: 0.1
+        memory: 256Mi
+  kafka:
+    enabled: false
+  mysql:
+    enabled: true
+    imagePullPolicy: IfNotPresent
+    imageTag: "5.6"
+    mysqlRootPassword: secretmysql
+    persistence:
+      accessMode: ReadWriteOnce
+      enabled: true
+      mountPath: /var/lib/mysql
+      size: 10Gi
+      storageClass: gold
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    users:
+      api:
+        password: password
+        username: monapi
+      grafana:
+        password: password
+        username: grafana
+      keystone:
+        password: keystone
+        username: keystone
+      notification:
+        password: password
+        username: notification
+      thresh:
+        password: password
+        username: thresh
+  storm:
+    enabled: false
+  zookeeper:
+    enabled: false
+cleanup:
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/job-cleanup
+    tag: 1.2.1
+  name: cleanup
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  serviceAccount: default
+  wait:
+    delay: "5.0"
+    retries: "24"
+    timeout: "10"
+client:
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/client
+    tag: 1.6.0
+  keystone:
+    password: M0n!#sca*_p@ss
+    project_domain_name: Default
+    project_name: service
+    user_domain_name: Default
+    username: monasca
+  name: client
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 200m
+      memory: 64Mi
+forwarder:
+  config:
+    monasca_project_id: 3564760a3dd44ae9bd6618d442fd758c
+    monasca_role: monasca-agent
+    remote_api_url: http://monasca:8070/v2.0
+    use_insecure: false
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/forwarder
+    tag: 1.0.1
+  logging:
+    debug: false
+    verbose: true
+  metric_configuration:
+    forwarder_metric_match.yml: |
+      metrics_to_forward:
+        - name: kubernetes.node.allocatable.cpu_agg
+        - name: cpu.total_time_sec_agg
+  name: forwarder
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+grafana:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/grafana
+    tag: 4.0.0-1.4.1
+  local_mysql_enabled: true
+  mysql:
+    password:
+      secret_key: password
+    port: 3306
+    username:
+      secret_key: username
+  name: grafana
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: true
+    size: 1Gi
+    storageClass: gold
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+  service:
+    port: 3000
+    type: NodePort
+  simple_name: false
+grafana_init:
+  datasource:
+    access_mode: proxy
+    type: monasca
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/grafana-init
+    tag: 1.2.1
+  log_level: INFO
+  password: password
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  username: monasca-agent
+influx_init:
+  default_retention: 45d
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/influxdb-init
+    tag: 1.0.3
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+  shard_duration: 1d
+influxdb:
+  config:
+    admin:
+      bind_address: 8083
+      enabled: false
+      https_certificate: /etc/ssl/influxdb.pem
+      https_enabled: false
+    bind_address: 8088
+    collectd:
+      auth_file: /etc/collectd/auth_file
+      batch_pending: 10
+      batch_size: 5000
+      batch_timeout: 10s
+      bind_address: 25826
+      database: collectd
+      enabled: false
+      read_buffer: 0
+      retention_policy: autogen
+      security_level: none
+      typesdb: /usr/share/collectd/types.db
+    continuous_queries:
+      enabled: true
+      log_enabled: true
+      run_interval: 1s
+    coordinator:
+      log_queries_after: 0s
+      max_concurrent_queries: 0
+      max_select_buckets: 0
+      max_select_point: 0
+      max_select_series: 0
+      query_timeout: 0s
+      write_timeout: 10s
+    data:
+      cache_max_memory_size: "1073741824"
+      cache_snapshot_memory_size: 26214400
+      cache_snapshot_write_cold_duration: 10m0s
+      compact_full_write_cold_duration: 4h0m0s
+      index_version: inmem
+      max_series_per_database: 1000000
+      max_values_per_tag: 100000
+      query_log_enabled: true
+      trace_logging_enabled: false
+    graphite:
+      batch_pending: 10
+      batch_size: 5000
+      batch_timeout: 1s
+      bind_address: 2003
+      consistency_level: one
+      database: graphite
+      enabled: false
+      protocol: tcp
+      retention_policy: autogen
+      separator: .
+      udp_read_buffer: 0
+    http:
+      auth_enabled: false
+      bind_address: 8086
+      bind_socket: /var/run/influxdb.sock
+      enabled: true
+      https_certificate: /etc/ssl/influxdb.pem
+      https_enabled: false
+      https_private_key: ""
+      log_enabled: true
+      max_connection_limit: 0
+      max_row_limit: 10000
+      pprof_enabled: true
+      realm: InfluxDB
+      shared_secret: beetlejuicebeetlejuicebeetlejuice
+      unix_socket_enabled: false
+      write_tracing: false
+    meta:
+      logging_enabled: true
+      retention_autocreate: true
+    monitor:
+      store_database: _internal
+      store_enabled: true
+      store_interval: 10s
+    opentsdb:
+      batch_pending: 5
+      batch_size: 1000
+      batch_timeout: 1s
+      bind_address: 4242
+      certificate: /etc/ssl/influxdb.pem
+      consistency_level: one
+      database: opentsdb
+      enabled: false
+      log_point_errors: true
+      retention_policy: autogen
+      tls_enabled: false
+    reporting_disabled: false
+    retention:
+      check_interval: 30m0s
+      enabled: true
+    shard_precreation:
+      advance_period: 30m0s
+      check_interval: 10m0s
+      enabled: true
+    storage_directory: /var/lib/influxdb
+    subscriber:
+      ca_certs: ""
+      enabled: true
+      http_timeout: 30s
+      insecure_skip_verify: false
+      write_buffer_size: 1000
+      write_concurrency: 40
+    udp:
+      batch_pending: 10
+      batch_size: 5000
+      batch_timeout: 1s
+      bind_address: 8089
+      database: udp
+      enabled: false
+      precision: ns
+      read_buffer: 0
+      retention_policy: autogen
+  enabled: true
+  global: {}
+  image:
+    pullPolicy: IfNotPresent
+    repo: influxdb
+    tag: 1.3.5-alpine
+  liveness:
+    initial_delay_seconds: 30
+    timeout_seconds: 5
+  nodeSelector: {}
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: false
+    size: 100Gi
+    storageClass: default
+  readiness:
+    initial_delay_seconds: 30
+    timeout_seconds: 1
+  resources:
+    limits:
+      cpu: 8
+      memory: 16Gi
+    requests:
+      cpu: 0.1
+      memory: 256Mi
+  service:
+    type: ClusterIP
+  setDefaultUser:
+    activeDeadline: 300
+    enabled: false
+    image: appropriate/curl:latest
+    restartPolicy: OnFailure
+    user:
+      privileges: WITH ALL PRIVILEGES
+      username: admin
+  watcher:
+    address: http://localhost:8086
+    database: mon
+    enabled: false
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/influxdb-watcher
+      tag: 0.0.2
+    password: password
+    port: 8080
+    resources:
+      limits:
+        cpu: 50m
+        memory: 64Mi
+      requests:
+        cpu: 25m
+        memory: 32Mi
+    stay_alive_on_failure: false
+    username: influxdb_watcher
+    watcher_period: 600
+    watcher_timeout: 60
+kafka:
+  cleanup:
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/job-cleanup
+      tag: 1.2.1
+    name: cleanup
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 50m
+        memory: 64Mi
+    serviceAccount: ""
+    wait:
+      delay: "5.0"
+      retries: "24"
+      timeout: "10"
+  enabled: false
+  exporter:
+    enabled: false
+    image:
+      pullPolicy: IfNotPresent
+      repository: rbrndt/kafka-prometheus
+      tag: latest
+    port: 7204
+  global: {}
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/kafka
+    tag: 0.9.0.1-2.11-1.1.6
+  init:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/kafka-init
+      tag: 0.0.3
+    resources:
+      limits:
+        cpu: 250m
+        memory: 256Mi
+      requests:
+        cpu: 200m
+        memory: 128Mi
+    topicConfig: ""
+    topics:
+    - metrics:64:1
+    - alarm-state-transitions:12:1
+    - alarm-notifications:12:1
+    - retry-notifications:3:1
+    - events:12:1
+    - 60-seconds-notifications:3:1
+    - kafka-health-check:1:1
+  memory_ratio: 0.85
+  overrideUri: standalone-kafka-headless:9092
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: false
+    size: 10Gi
+    storageClass: default
+  rbac:
+    create: false
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 1Gi
+  service:
+    port: 9092
+    type: ClusterIP
+  stack_size: 1024k
+  static_service:
+    enabled: false
+    name: kafka
+    port: 9092
+    type: ClusterIP
+  stay_alive_on_failure: false
+  watcher:
+    enabled: false
+    group_id: kafka_watcher
+    health_check_topic: kafka-health-check
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/kafka-watcher
+      tag: 0.0.4
+    port: 8080
+    resources:
+      limits:
+        cpu: 50m
+        memory: 64Mi
+      requests:
+        cpu: 25m
+        memory: 32Mi
+    stay_alive_on_failure: false
+    watcher_period: 600
+    watcher_timeout: 60
+  zookeeper:
+    overrideUri: ""
+keystone:
+  bootstrap:
+    password: secretadmin
+    project: admin
+    region: RegionOne
+    role: admin
+    service: keystone
+    user: admin
+  database_backend: mysql
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/keystone
+    tag: 1.1.3
+  mysql:
+    database: keystone
+    password:
+      secret_key: password
+    username:
+      secret_key: username
+  name: keystone
+  override:
+    admin_url: ""
+    public_url: ""
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    admin_port: 5000
+    port: 35357
+    type: ClusterIP
+  static_service:
+    admin_port: 5000
+    enabled: false
+    name: keystone
+    port: 35357
+    type: ClusterIP
+  users:
+    admin:
+      password: secretadmin
+    demo:
+      password: secretadmin
+    mini_mon:
+      password: password
+    monasca_agent:
+      password: password
+    monasca_read_only:
+      password: password
+memcached:
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: memcached
+    tag: 1.5.0-alpine
+  name: memcached
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
+    requests:
+      cpu: 50m
+      memory: 32Mi
+  service:
+    type: ClusterIP
+mysql:
+  enabled: true
+  global: {}
+  imagePullPolicy: IfNotPresent
+  imageTag: "5.6"
+  mysqlRootPassword: secretmysql
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: false
+    size: 10Gi
+    storageClass: default
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  users:
+    api:
+      password: password
+      username: monapi
+    grafana:
+      password: password
+      username: grafana
+    keystone:
+      password: keystone
+      username: keystone
+    notification:
+      password: password
+      username: notification
+    thresh:
+      password: password
+      username: thresh
+mysql_init:
+  create_mon_users: true
+  disable_remote_root: false
+  enabled: true
+  grafana_db_enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/mysql-init
+    tag: 1.5.4
+  keystone_db_enabled: false
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+notification:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/notification
+    tag: master-20171004-112434
+  log_level: WARN
+  mysql:
+    password:
+      secret_key: password
+    port: "3306"
+    username:
+      secret_key: username
+  name: notification
+  plugin_config:
+    email:
+      defined: false
+    hipchat:
+      timeout: 5
+    slack:
+      timeout: 5
+    webhook:
+      timeout: 5
+  plugins: slack,webhook
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+persister:
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/persister
+    tag: master-20180111-234331
+  influxdb:
+    database: mon
+    password: password
+    user: mon_persister
+  kafka:
+    alarm_history:
+      batch_size: 2000
+      wait_time: 15
+    metrics:
+      batch_size: 5000
+      wait_time: 15
+  logging:
+    debug: false
+    verbose: true
+  name: persister
+  replicaCount: 6
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+rbac:
+  create: true
+smoke_tests:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/smoke-tests
+    tag: 1.0.3
+  keystone:
+    domain_name: Default
+    password: password
+    tenant_name: admin
+    username: monasca
+  name: smoke-tests
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+storm:
+  enabled: false
+  global: {}
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/storm
+    tag: 1.1.1-1.0.11
+  name: storm
+  nimbus_resources:
+    limits:
+      cpu: 500m
+      memory: 2Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: true
+    size: 4Gi
+    storageClass: gold
+  service:
+    port: 6627
+    type: ClusterIP
+  supervisor_ports:
+  - 6701
+  - 6702
+  supervisor_resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 250m
+      memory: 2Gi
+  thresh:
+    bolt:
+      aggregationBoltTasks: 2
+      aggregationBoltThreads: 2
+      alarmCreationBoltTasks: 2
+      alarmCreationBoltThreads: 2
+      eventBoltTasks: 2
+      eventBoltThreads: 2
+      filteringBoltTasks: 2
+      filteringBoltThreads: 2
+      thresholdingBoltTasks: 2
+      thresholdingBoltThreads: 2
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/thresh
+      tag: master-20171205-104226
+    mysql:
+      port: "3306"
+    name: thresh
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 512Mi
+      requests:
+        cpu: 256m
+        memory: 256Mi
+    secretSuffix: mysql-thresh-secret
+    spout:
+      eventSpoutTasks: 2
+      eventSpoutThreads: 2
+      metricSpoutTasks: 2
+      metricSpoutThreads: 2
+    wait:
+      delay: 5
+      retries: 24
+      timeout: 10
+tempest_tests:
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/tempest-tests
+    tag: 1.0.2
+  keystone:
+    admin_domain_name: Default
+    admin_password: password
+    admin_project_name: admin
+    admin_username: admin
+    alt_password: password
+    alt_tenant_name: mini-mon
+    alt_username: mini-mon
+    auth_use_ssl: false
+    keystone_port: 35357
+    keystone_server: keystone
+    os_domain_name: Default
+    os_password: password
+    os_tenant_name: monasca
+    os_username: monasca
+    use_dynamic_creds: true
+  name: tempest-tests
+  ostestr_regex: monasca_tempest_tests
+  stay_alive_on_failure: false
+  wait:
+    delay: 5
+    enabled: true
+    retries: 24
+thresh:
+  bolt:
+    aggregationBoltTasks: 2
+    aggregationBoltThreads: 2
+    alarmCreationBoltTasks: 2
+    alarmCreationBoltThreads: 2
+    eventBoltTasks: 2
+    eventBoltThreads: 2
+    filteringBoltTasks: 2
+    filteringBoltThreads: 2
+    thresholdingBoltTasks: 2
+    thresholdingBoltThreads: 2
+  enabled: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: monasca/thresh
+    tag: master-20171205-104226
+  jmx:
+    enabled: false
+    port: 9090
+  memory_ratio: 0.85
+  mysql:
+    password:
+      secret_key: password
+    port: 3306
+    username:
+      secret_key: username
+  name: thresh
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 256m
+      memory: 256Mi
+  secretSuffix: mysql-thresh-secret
+  spout:
+    eventSpoutTasks: 2
+    eventSpoutThreads: 2
+    metricSpoutTasks: 2
+    metricSpoutThreads: 2
+  stack_size: 1024k
+  use_local: true
+  wait:
+    delay: 5
+    retries: 24
+    timeout: 10
+zookeeper:
+  enabled: false
+  global: {}
+  image:
+    pullPolicy: IfNotPresent
+    repository: zookeeper
+    tag: 3.4.10
+  java:
+    max_ram_fraction: 2
+  name: zookeeper
+  overrideUri: standalone-kafka-zookeeper-headless:2181
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: false
+    purge_interval: 1
+    size: 10Gi
+    snap_retain_count: 3
+    storageClass: default
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  service:
+    type: ClusterIP
+  static_service:
+    enabled: false
+    name: zookeeper
+    type: ClusterIP
+  watcher:
+    enabled: false
+    health_check_path: zookeeper-health-check
+    image:
+      pullPolicy: IfNotPresent
+      repository: monasca/zookeeper-watcher
+      tag: 0.0.2
+    port: 8080
+    resources:
+      limits:
+        cpu: 50m
+        memory: 64Mi
+      requests:
+        cpu: 25m
+        memory: 32Mi
+    stay_alive_on_failure: false
+    watcher_period: 600
+    watcher_timeout: 60
+
+HOOKS:
+---
+# monasca-kafka-cleanup-job-f4jtd
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # while not recommended, we add a random sequence to the end of the job name
+  # this job will attempt to delete itself when finished, but should it fail for
+  # some reason we don't want future upgrades to fail because of a name conflict
+  # (plus the future runs of this job will delete any previous iterations that
+  # failed to clean themselves up)
+  name: "monasca-kafka-cleanup-job-f4jtd"
+  labels:
+    app: monasca-kafka
+    component: "cleanup"
+    chart: "kafka-0.4.2"
+    release: "monasca"
+    heritage: "Tiller"
+  annotations:
+    "helm.sh/hook": pre-upgrade,post-delete
+    "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    metadata:
+      labels:
+        app: monasca-kafka
+        component: "cleanup"
+        chart: "kafka-0.4.2"
+        release: "monasca"
+        heritage: "Tiller"
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: kafka-cleanup-job
+          image: "monasca/job-cleanup:1.2.1"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            
+          env:
+            - name: "WAIT_RETRIES"
+              value: "24"
+            - name: "WAIT_DELAY"
+              value: "5.0"
+            - name: "WAIT_TIMEOUT"
+              value: "10"
+---
+# monasca-cleanup-job-9aknq
+apiVersion: batch/v1
+kind: Job
+metadata:
+  # while not recommended, we add a random sequence to the end of the job name
+  # this job will attempt to delete itself when finished, but should it fail for
+  # some reason we don't want future upgrades to fail because of a name conflict
+  # (plus the future runs of this job will delete any previous iterations that
+  # failed to clean themselves up)
+  name: "monasca-cleanup-job-9aknq"
+  labels:
+    app: monasca-monasca
+    component: "cleanup-job"
+    chart: "monasca-0.6.4"
+    release: "monasca"
+    heritage: "Tiller"
+  annotations:
+    "helm.sh/hook": pre-upgrade,post-delete
+    "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    metadata:
+      labels:
+        app: monasca-monasca
+        component: "cleanup-job"
+        chart: "monasca-0.6.4"
+        release: "monasca"
+        heritage: "Tiller"
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: monasca-cleanup-job
+          image: "monasca/job-cleanup:1.2.1"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            
+          env:
+            - name: "WAIT_RETRIES"
+              value: "24"
+            - name: "WAIT_DELAY"
+              value: "5.0"
+            - name: "WAIT_TIMEOUT"
+              value: "10"
+      serviceAccountName: "default"
+MANIFEST:
+
+---
+# Source: monasca/charts/mysql/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monasca-mysql
+  labels:
+    app: monasca-mysql
+    chart: "mysql-0.2.4"
+    release: "monasca"
+    heritage: "Tiller"
+type: Opaque
+data:
+  
+  mysql-root-password:  "c2VjcmV0bXlzcWw="
+  
+  
+  mysql-password: "Rm8wNUl4MmR2cw=="
+---
+# Source: monasca/templates/mysql-api-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "monasca-mysql-api-secret"
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    heritage: "Tiller"
+    release: "monasca"
+type: Opaque
+data:
+  username: "bW9uYXBp"
+  password: "cGFzc3dvcmQ="
+---
+# Source: monasca/templates/mysql-keystone-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "monasca-mysql-keystone-secret"
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    heritage: "Tiller"
+    release: "monasca"
+type: Opaque
+data:
+  username: "a2V5c3RvbmU="
+  password: "a2V5c3RvbmU="
+---
+# Source: monasca/templates/mysql-notification-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "monasca-mysql-notification-secret"
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    heritage: "Tiller"
+    release: "monasca"
+type: Opaque
+data:
+  username: "bm90aWZpY2F0aW9u"
+  password: "cGFzc3dvcmQ="
+---
+# Source: monasca/templates/mysql-thresh-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "monasca-mysql-thresh-secret"
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    heritage: "Tiller"
+    release: "monasca"
+type: Opaque
+data:
+  username: "dGhyZXNo"
+  password: "cGFzc3dvcmQ="
+---
+# Source: monasca/charts/influxdb/templates/config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monasca-influxdb
+  labels:
+    app: monasca-influxdb
+    chart: "influxdb-0.6.2-0.0.2"
+    release: "monasca"
+    heritage: "Tiller"
+data:
+  influxdb.conf: |+
+    reporting-disabled = false
+    bind-address = ":8088"
+
+    [meta]
+      dir = "/var/lib/influxdb/meta"
+      retention-autocreate = true
+      logging-enabled = true
+
+    [data]
+      dir = "/var/lib/influxdb/data"
+      wal-dir = "/var/lib/influxdb/wal"
+      index-version = "inmem"
+      query-log-enabled = true
+      cache-max-memory-size = 1073741824
+      cache-snapshot-memory-size = 26214400
+      cache-snapshot-write-cold-duration = "10m0s"
+      compact-full-write-cold-duration = "4h0m0s"
+      max-series-per-database = 1000000
+      max-values-per-tag = 100000
+      trace-logging-enabled = false
+
+    [coordinator]
+      write-timeout = "10s"
+      max-concurrent-queries = 0
+      query-timeout = "0s"
+      log-queries-after = "0s"
+      max-select-point = 0
+      max-select-series = 0
+      max-select-buckets = 0
+
+    [retention]
+      enabled = true
+      check-interval = "30m0s"
+
+    [shard-precreation]
+      enabled = true
+      check-interval = "10m0s"
+      advance-period = "30m0s"
+
+    [admin]
+      enabled = false
+      bind-address = ":8083"
+      https-enabled = false
+      https-certificate = "/etc/ssl/influxdb.pem"
+
+    [monitor]
+      store-enabled = true
+      store-database = "_internal"
+      store-interval = "10s"
+
+    [subscriber]
+      enabled = true
+      http-timeout = "30s"
+      insecure-skip-verify = false
+      ca-certs = ""
+      write-concurrency = 40
+      write-buffer-size = 1000
+
+    [http]
+      enabled = true
+      bind-address = ":8086"
+      auth-enabled = false
+      log-enabled = true
+      write-tracing = false
+      pprof-enabled = true
+      https-enabled = false
+      https-certificate = "/etc/ssl/influxdb.pem"
+      https-private-key = ""
+      max-row-limit = 10000
+      max-connection-limit = 0
+      shared-secret = "beetlejuicebeetlejuicebeetlejuice"
+      realm = "InfluxDB"
+      unix-socket-enabled = false
+      bind-socket = "/var/run/influxdb.sock"
+    
+    # TODO: allow multiple graphite listeners with templates
+    
+    [[graphite]]
+      enabled = false
+      bind-address = ":2003"
+      database = "graphite"
+      retention-policy = "autogen"
+      protocol = "tcp"
+      batch-size = 5000
+      batch-pending = 10
+      batch-timeout = "1s"
+      consistency-level = "one"
+      separator = "."
+      udp-read-buffer = 0
+    
+    # TODO: allow multiple collectd listeners with templates
+
+    [[collectd]]
+      enabled = false
+      bind-address = ":25826"
+      database = "collectd"
+      retention-policy = "autogen"
+      batch-size = 5000
+      batch-pending = 10
+      batch-timeout = "10s"
+      read-buffer = 0
+      typesdb = "/usr/share/collectd/types.db"
+      security-level = "none"
+      auth-file = "/etc/collectd/auth_file"
+    
+    # TODO: allow multiple opentsdb listeners with templates
+
+    [[opentsdb]]
+      enabled = false
+      bind-address = ":4242"
+      database = "opentsdb"
+      retention-policy = "autogen"
+      consistency-level = "one"
+      tls-enabled = false
+      certificate = "/etc/ssl/influxdb.pem"
+      batch-size = 1000
+      batch-pending = 5
+      batch-timeout = "1s"
+      log-point-errors = true
+    
+    # TODO: allow multiple udp listeners with templates
+
+    [[udp]]
+      enabled = false
+      bind-address = ":8089"
+      database = "udp"
+      retention-policy = "autogen"
+      batch-size = 5000
+      batch-pending = 10
+      read-buffer = 0
+      batch-timeout = "1s"
+      precision = "ns"
+
+    [continuous_queries]
+      log-enabled = true
+      enabled = true
+      run-interval = "1s"
+---
+# Source: monasca/charts/zookeeper/templates/zookeeper-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monasca-zookeeper
+  labels:
+    app: monasca-zookeeper
+    chart: "zookeeper-0.3.8"
+    release: "monasca"
+    heritage: "Tiller"
+data:
+  zoo.cfg: |
+    clientPort=2181
+    dataDir=/data
+    dataLogDir=/data
+    tickTime=2000
+    initLimit=5
+    syncLimit=2
+    maxClientCnxns=1000
+    autopurge.snapRetainCount=3
+    autopurge.purgeInterval=1
+  log4j.properties: |
+    # Root logger option
+    log4j.rootLogger=INFO, stdout
+
+    # Direct log messages to stdout
+    log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+    log4j.appender.stdout.Target=System.out
+    log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+    log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n
+---
+# Source: monasca/templates/agent-serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "monasca-agent"
+  labels:
+    app: monasca-monasca
+    chart: monasca-0.6.4
+    component: "agent"
+    heritage: Tiller
+    release: monasca
+---
+# Source: monasca/templates/agent-clusterrole.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: "monasca-agent"
+rules:
+  - apiGroups: ["", "extensions", "storage.k8s.io"]
+    verbs: ["get", "list"]
+    resources:
+      - namespaces
+      - pods
+      - replicasets
+      - deployments
+      - replicationcontrollers
+      - nodes
+      - services
+      - componentstatuses
+      - storageclasses
+  - apiGroups: ["", "batch", "extensions", "storage.k8s.io"]
+    verbs: ["get", "list", "delete"]
+    resources:
+      - jobs
+      - pods
+---
+# Source: monasca/templates/agent-clusterrolebinding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: "monasca-agent"
+subjects:
+  - kind: ServiceAccount
+    name: "monasca-agent"
+    namespace: "monasca"
+roleRef:
+  kind: ClusterRole
+  name: "monasca-agent"
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: monasca/charts/influxdb/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: monasca-influxdb
+  labels:
+    app: monasca-influxdb
+    chart: "influxdb-0.6.2-0.0.2"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  type: ClusterIP
+  ports:
+  - name: api
+    port: 8086
+    targetPort: 8086
+  selector:
+    app: monasca-influxdb
+---
+# Source: monasca/charts/kafka/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: monasca-kafka
+    chart: "kafka-0.4.2"
+    heritage: "Tiller"
+    release: "monasca"
+  name: monasca-kafka
+spec:
+  type: ClusterIP
+  ports:
+    - name: kafka
+      port: 9092
+      targetPort: kafka
+  selector:
+    app: monasca-kafka
+---
+# Source: monasca/charts/mysql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: monasca-mysql
+  labels:
+    app: monasca-mysql
+    chart: "mysql-0.2.4"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+    targetPort: mysql
+  selector:
+    app: monasca-mysql
+---
+# Source: monasca/charts/zookeeper/templates/zookeeper-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: monasca-zookeeper
+  labels:
+    app: monasca-zookeeper
+    chart: "zookeeper-0.3.8"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  ports:
+    - name: client
+      port: 2181
+    - name: peer
+      port: 2888
+    - name: leader-election
+      port: 3888
+  type: ClusterIP
+  selector:
+    app: monasca-zookeeper
+---
+# Source: monasca/templates/api-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    component: "api"
+    heritage: "Tiller"
+    release: "monasca"
+  name: monasca-api
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8070
+  selector:
+    app: monasca-monasca
+    component: "api"
+---
+# Source: monasca/templates/memcached-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    component: "memcached"
+    heritage: "Tiller"
+    release: "monasca"
+  name: monasca-memcached
+spec:
+  type: ClusterIP
+  ports:
+    - name: memcached
+      port: 11211
+      targetPort: memcached
+  selector:
+    app: monasca-monasca
+    component: "memcached"
+---
+# Source: monasca/charts/influxdb/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monasca-influxdb
+  labels:
+    app: monasca-influxdb
+    chart: "influxdb-0.6.2-0.0.2"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  selector:
+    matchLabels:
+      app: monasca-influxdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: monasca-influxdb
+    spec:
+      containers:
+      - name: monasca-influxdb
+        image: "influxdb:1.3.5-alpine"
+        imagePullPolicy: "IfNotPresent"
+        resources:
+          limits:
+            cpu: 8
+            memory: 16Gi
+          requests:
+            cpu: 0.1
+            memory: 256Mi
+          
+        ports:
+        - name: api
+          containerPort: 8086
+        
+        
+        
+        
+        
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: api
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: api
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/influxdb
+        - name: config
+          mountPath: /etc/influxdb
+      volumes:
+      - name: data
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: monasca-influxdb
+---
+# Source: monasca/charts/kafka/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monasca-kafka
+  labels:
+    app: monasca-kafka
+    chart: "kafka-0.4.2"
+    release: "monasca"
+    heritage: "Tiller"
+    component: kafka
+spec:
+  selector:
+    matchLabels:
+      app: monasca-kafka
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: monasca-kafka
+    spec:
+      containers:
+        - name: kafka
+          image: "monasca/kafka:0.9.0.1-2.11-1.1.6"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+            
+          ports:
+            - name: kafka
+              containerPort: 9092
+          volumeMounts:
+            - name: kafka
+              mountPath: /data
+          env:
+            - name: KAFKA_DELETE_TOPIC_ENABLE
+              value: "true"
+            - name: KAFKA_AUTO_CREATE_TOPICS
+              value: "false"
+            - name: KAFKA_JMX
+              value: "true"
+            - name: JVM_MAX_RATIO
+              value: "0.85"
+            - name: KAFKA_STACK_SIZE
+              value: "1024k"
+            - name: ZOOKEEPER_CONNECTION_STRING
+              value: monasca-zookeeper:2181
+            - name: STAY_ALIVE_ON_FAILURE
+              value: "false"
+      volumes:
+        - name: kafka
+          emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - "monasca-influxdb"
+                topologyKey: "kubernetes.io/hostname"
+---
+# Source: monasca/charts/mysql/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monasca-mysql
+  labels:
+    app: monasca-mysql
+    chart: "mysql-0.2.4"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  selector:
+    matchLabels:
+      app: monasca-mysql
+  template:
+    metadata:
+      labels:
+        app: monasca-mysql
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+              {
+                  "name": "remove-lost-found",
+                  "image": "busybox:1.25.0",
+                  "command": ["rm", "-fr", "/var/lib/mysql/lost+found"],
+                  "volumeMounts": [
+                      {
+                          "name": "data",
+                          "mountPath": "/var/lib/mysql"
+                      }
+                  ],
+                  "imagePullPolicy": "IfNotPresent"
+              }
+          ]'
+    spec:
+      containers:
+      - name: monasca-mysql
+        image: "mysql:5.6"
+        imagePullPolicy: "IfNotPresent"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: monasca-mysql
+              key: mysql-root-password
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: monasca-mysql
+              key: mysql-password
+        - name: MYSQL_USER
+          value: ""
+        - name: MYSQL_DATABASE
+          value: ""
+        ports:
+        - name: mysql
+          containerPort: 3306
+        livenessProbe:
+          exec:
+            command:
+            - mysqladmin
+            - ping
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - mysqladmin
+            - ping
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: data
+        emptyDir: {}
+---
+# Source: monasca/charts/zookeeper/templates/zookeeper-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monasca-zookeeper
+  labels:
+    app: monasca-zookeeper
+    chart: "zookeeper-0.3.8"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  selector:
+    matchLabels:
+      app: monasca-zookeeper
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: monasca-zookeeper
+    spec:
+      containers:
+        - name: zookeeper
+          image: "zookeeper:3.4.10"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            
+          env:
+            - name: SERVER_JVMFLAGS
+              value: "-XX:MaxRAMFraction=2 -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XshowSettings:vm"
+          ports:
+            - name: client
+              containerPort: 2181
+            - name: peer
+              containerPort: 2888
+            - name: leader-election
+              containerPort: 3888
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
+            - name: config-volume
+              mountPath: /conf
+      volumes:
+        - name: config-volume
+          configMap:
+            name: monasca-zookeeper
+        - name: data-volume
+          emptyDir: {}
+---
+# Source: monasca/templates/api-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monasca-api
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    component: "api"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  selector:
+    matchLabels:
+      app: monasca-monasca
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: monasca-monasca
+        component: "api"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "4888"
+    spec:
+      containers:
+      - name: api
+        image: "monasca/api:master-20180105-072513"
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          
+        ports:
+            - containerPort: 8070
+              name: client
+        env:
+            - name: LOG_LEVEL_ROOT
+              value: "WARN"
+            - name: LOG_LEVEL_CONSOLE
+              value: "WARN"
+            - name: KAFKA_URI
+              value: "standalone-kafka-headless:9092"
+            - name: INFLUX_HOST
+              value: "monasca-influxdb"
+            - name: INFLUX_PORT
+              value: "8086"
+            - name: INFLUX_USER
+              value: "mon_api"
+            - name: INFLUX_PASSWORD
+              value: "password"
+            - name: INFLUX_DB
+              value: "mon"
+            - name: MYSQL_HOST
+              value: "monasca-mysql"
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-api-secret"
+                  key: "username"
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-api-secret"
+                  key: "password"
+            - name: MYSQL_DB
+              value: "mon"
+            - name: MEMCACHED_URI
+              value: "monasca-memcached:11211"
+            - name: KEYSTONE_IDENTITY_URI              
+              value: "http://cloud.brilliant.com.bd:5000"
+            - name: KEYSTONE_AUTH_URI              
+              value: "http://cloud.brilliant.com.bd:5000"
+            - name: KEYSTONE_ADMIN_USER              
+              value: "monasca"
+            - name: KEYSTONE_ADMIN_PASSWORD              
+              value: "M0n!#sca*_p@ss"
+            - name: KEYSTONE_ADMIN_TENANT              
+              value: "service"
+            - name: SIDECAR_URL
+              value: http://localhost:4888/v1/ingest
+            - name: GUNICORN_WORKERS
+              value: "1"
+      - name: sidecar
+        image: "timothyb89/monasca-sidecar:1.0.0"
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          
+        ports:
+          - containerPort: 4888
+            name: scrape
+---
+# Source: monasca/templates/client-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monasca-client
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    component: "client"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  selector:
+    matchLabels:
+      app: monasca-monasca
+  template:
+    metadata:
+      labels:
+        component: "client-deployment"
+        app: monasca-monasca
+    spec:
+      containers:
+        - name: client
+          image: "monasca/client:1.6.0"
+          imagePullPolicy: IfNotPresent
+          command:
+            - "sh"
+            - "-c"
+            - "while true; do sleep 86400; done"
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 200m
+              memory: 64Mi
+            
+          env:
+            - name: OS_AUTH_URL
+              value: "http://monasca-keystone:35357/v3"
+            
+            - name: OS_USERNAME
+              value: "monasca"
+            - name: OS_PASSWORD
+              value: "M0n!#sca*_p@ss"
+            - name: OS_USER_DOMAIN_NAME
+              value: "Default"
+            - name: OS_PROJECT_NAME
+              value: "service"
+            - name: OS_PROJECT_DOMAIN_NAME
+              value: "Default"
+            - name: MONASCA_API_URL
+              value: "http://monasca-api:8070/v2.0"
+---
+# Source: monasca/templates/memcached-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monasca-memcached
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    component: "memcached"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  selector:
+    matchLabels:
+      app: monasca-monasca
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: monasca-monasca
+        component: "memcached"
+    spec:
+      containers:
+      - name: memcached
+        image: "memcached:1.5.0-alpine"
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 50m
+            memory: 32Mi
+          
+        ports:
+          - containerPort: 11211
+            name: memcached
+---
+# Source: monasca/templates/persister-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    component: "persister"
+    heritage: "Tiller"
+    release: "monasca"
+  name: monasca-persister
+spec:
+  selector:
+    matchLabels:
+      app: monasca-monasca
+  replicas: 6
+  template:
+    metadata:
+      labels:
+        app: monasca-monasca
+        component: "persister"
+    spec:
+      containers:
+      - name: persister
+        image: "monasca/persister:master-20180111-234331"
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          
+        env:
+            - name: DEBUG
+              value: "false"
+            - name: VERBOSE
+              value: "true"
+            - name: ZOOKEEPER_URI
+              value: "standalone-kafka-zookeeper-headless:2181"
+            - name: KAFKA_URI
+              value: "standalone-kafka-headless:9092"
+            - name: INFLUX_PORT
+              value: "8086"
+            - name: INFLUX_USER
+              value: "mon_persister"
+            - name: INFLUX_PASSWORD
+              value: "password"
+            - name: INFLUX_DB
+              value: "mon"
+            - name: INFLUX_HOST
+              value: "monasca-influxdb"
+            - name: KAFKA_METRICS_BATCH_SIZE
+              value: "5000"
+            - name: KAFKA_METRICS_WAIT_TIME
+              value: "15"
+            - name: KAFKA_ALARM_HISTORY_BATCH_SIZE
+              value: "2000"
+            - name: KAFKA_ALARM_HISTORY_WAIT_TIME
+              value: "15"
+---
+# Source: monasca/charts/kafka/templates/init-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: monasca-kafka-init-job
+  labels:
+    app: monasca-kafka
+    chart: "kafka-0.4.2"
+    component: "kafka-init-job"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  template:
+    metadata:
+      labels:
+        app: monasca-kafka
+        component: kafka-init-job
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mysql-init-job
+          image: "monasca/kafka-init:0.0.3"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 250m
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            
+          env:
+            - name: KAFKA_HOST
+              value: "monasca-kafka:9092"
+            - name: ZOOKEEPER_CONNECTION_STRING
+              value: monasca-zookeeper:2181
+            - name: KAFKA_DELETE_TOPIC_ENABLE
+              value: "true"
+            - name: KAFKA_AUTO_CREATE_TOPICS
+              value: "false"
+            - name: JVM_MAX_HEAP_RATIO
+              value: 
+            - name: KAFKA_STACK_SIZE
+              value: "1024k"
+            - name: KAFKA_CREATE_TOPICS
+              value: "metrics:64:1,alarm-state-transitions:12:1,alarm-notifications:12:1,retry-notifications:3:1,events:12:1,60-seconds-notifications:3:1,kafka-health-check:1:1"
+---
+# Source: monasca/templates/influx-init-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: monasca-influx-init-job
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  template:
+    metadata:
+      labels:
+        app: monasca-monasca
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: influx-init-job
+          image: "monasca/influxdb-init:1.0.3"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: INFLUXDB_URL
+              value: "http://monasca-influxdb:8086"
+            - name: INFLUXDB_SHARD_DURATION
+              value: "1d"
+            - name: INFLUXDB_DEFAULT_RETENTION
+              value: "45d"
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+---
+# Source: monasca/templates/mysql-init-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: monasca-mysql-init-job
+  labels:
+    app: monasca-monasca
+    chart: "monasca-0.6.4"
+    release: "monasca"
+    heritage: "Tiller"
+spec:
+  template:
+    metadata:
+      labels:
+        app: monasca-monasca
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mysql-init-job
+          image: "monasca/mysql-init:1.5.4"
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            
+          env:
+            - name: MYSQL_INIT_DISABLE_REMOTE_ROOT
+              value: "false"
+            - name: MYSQL_INIT_RANDOM_PASSWORD
+              value: "false"
+            - name: MYSQL_INIT_HOST
+              value: "monasca-mysql"
+            - name: MYSQL_INIT_USERNAME              
+              value: ""
+            - name: MYSQL_INIT_PASSWORD              
+              value: ""
+            - name: MYSQL_INIT_PORT              
+              value: ""
+            - name: CREATE_MON_USERS
+              value: "true"
+            - name: GRAFANA_DB_ENABLED
+              value: "true"
+            - name: KEYSTONE_DB_ENABLED
+              value: "false"
+            - name: API_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-api-secret"
+                  key: "username"
+            - name: API_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-api-secret"
+                  key: "password"
+            - name: NOTIFICATION_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-notification-secret"
+                  key: "username"
+            - name: NOTIFICATION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-notification-secret"
+                  key: "password"
+            - name: THRESH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-thresh-secret"
+                  key: "username"
+            - name: THRESH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "monasca-mysql-thresh-secret"
+                  key: "password"

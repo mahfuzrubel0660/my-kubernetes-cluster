@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-configmap-app2
+data:
+  index.html: |
+    <body bgcolor="green">
+      <center>
+        <h1><front color="yellow">Hello I am App-2</front></h1>
+      </center>
+    </body>

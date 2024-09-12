@@ -1,0 +1,36 @@
+pipeline {
+  environment {
+    registry = "mahfuzrubel0660/httpd-cicd"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/mahfuzrubel0660/jenkin.git'
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Kubectl-Image-Set') {
+      steps{
+        sh "kubectl set image deployment/httpd-cicd httpd-cicd=mahfuzrubel0660/httpd-cicd:$BUILD_NUMBER"  
+      }
+    }
+  }
+}

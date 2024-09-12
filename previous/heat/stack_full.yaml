@@ -1,0 +1,188 @@
+heat_template_version: 2017-02-24
+description: Deploy Kubernetes cluster with kubeadm
+
+parameters:
+    key_name:
+        type: string
+        label: Key Name
+        description: SSH key to be used for all instances
+    image:
+        type: string
+        label: Image
+        description: Image to be used
+        default: ubuntu-16-04-amd64-cloudimg    
+    master_flavor:
+        type: string
+        label: Master Instance Type
+        description: Type of instance (flavor) to deploy master node
+        default: m1.small
+    volume_type:
+        type: string
+        label: volume-type
+        description: bootable-volume
+        default: CEPH
+    slave_volume_type:
+        type: string
+        label: slave_volume_type
+        description: bootable-volume
+        default: CEPH
+
+    slave_count:
+        type: number
+        label: Slave Count
+        description: Number of slaves
+        default: 2
+    slave_flavor:
+        type: string
+        label: Slave Instance Type
+        description: Type of instance (flavor) to deploy slave nodes
+        default: m1.small
+    public_network_id:
+        type: string
+        description: ID of the public network
+        default: public
+    subnet_cidr:
+        type: string
+        description: ID of the public network
+        default: 10.10.2.0/24
+    subnet_gateway:
+        type: string
+        description: ID of the public network
+        default: 10.10.2.1
+
+    resource_prefix:
+        type: string
+        description: Prefix to add to all resources
+        default: k8s-
+    dns_nameservers:
+        type: comma_delimited_list
+        label: DNS Nameservers
+        description: DNS nameservers to use on nodes
+        default: 8.8.8.8
+    availability_zone:
+        type: string
+        label: Availability Zone
+        description: Availabilito zone to create nodes in
+    master_volume_size:
+        type: number
+        default: 50
+    slave_volume_size:
+        type: number
+        default: 80
+    port_security_enabled:
+        type: string
+        description: port_security_enabled
+        default: enabled
+
+resources:
+    random_string:
+        type: OS::Heat::RandomString
+        properties:
+            length: 8
+            sequence: lowercase
+    prefix_random:
+        type: OS::Heat::Value
+        properties:
+            value:
+                str_replace:
+                    template: $prefix$random
+                    params:
+                        $prefix: { get_param: resource_prefix }
+                        $random: { get_resource: random_string }
+
+    ##### Network #####
+    internal_net:
+        type: OS::Neutron::Net
+        properties:
+            admin_state_up: true
+            name:
+                str_replace:
+                    template: $prefix-network
+                    params:
+                        $prefix: { get_attr: [prefix_random, value] }
+    internal_subnet:
+        type: OS::Neutron::Subnet
+        properties:
+            network_id: { get_resource: internal_net }
+            cidr: { get_param: subnet_cidr }
+            gateway_ip: { get_param: subnet_gateway }
+            enable_dhcp: true
+            dns_nameservers: { get_param: dns_nameservers }
+            name:
+                str_replace:
+                    template: $prefix-subnet
+                    params:
+                        $prefix: { get_attr: [prefix_random, value] }
+    internal_router:
+        type: OS::Neutron::Router
+        properties:
+            admin_state_up: true
+            external_gateway_info: { "network": { get_param: public_network_id }}
+            name:
+                str_replace:
+                    template: $prefix-router
+                    params:
+                        $prefix: { get_attr: [prefix_random, value] }
+    internal_router_interface:
+        type: OS::Neutron::RouterInterface
+        properties:
+            router_id: { get_resource: internal_router }
+            subnet_id: { get_resource: internal_subnet }
+    security_group:
+        type: OS::Neutron::SecurityGroup
+        properties:
+            name:
+                str_replace:
+                    template: $prefix-security-group
+                    params:
+                        $prefix: { get_attr: [prefix_random, value] }
+            rules:
+                - remote_mode: remote_group_id
+                  direction: ingress
+                - remote_mode: remote_group_id
+                  direction: egress
+                - direction: egress
+                - protocol: icmp
+                - port_range_min: 22
+                  port_range_max: 22
+                  protocol: tcp
+                - port_range_min: 6443
+                  port_range_max: 6443
+                  protocol: tcp
+                - port_range_min: 80
+                  port_range_max: 80
+                  protocol: tcp
+                  remote_ip_prefix: { get_param: subnet_cidr }
+                - port_range_min: 30000
+                  port_range_max: 32767
+                  protocol: tcp
+
+    ##### Stack #####
+    stack:
+        type: "https://raw.githubusercontent.com/munnaeebd/k8s-example-via-gui/master/stack.yaml"
+        depends_on: [ internal_subnet, internal_router_interface ]
+        properties:
+            key_name: { get_param: key_name }
+            image: { get_param: image }
+            master_flavor: { get_param: master_flavor }
+            slave_count: { get_param: slave_count }
+            slave_flavor: { get_param: slave_flavor }
+            public_network_id: { get_param: public_network_id }
+            internal_net: { get_resource: internal_net }
+            resource_prefix: { get_attr: [prefix_random, value] }
+            dns_nameservers: { get_param: dns_nameservers }
+            availability_zone: { get_param: availability_zone }
+            security_group: { get_resource: security_group }
+            master_volume_size: { get_param: master_volume_size }
+            slave_volume_size: { get_param: slave_volume_size }
+            volume_type: { get_param: volume_type }
+            slave_volume_type: { get_param: slave_volume_type }
+            port_security_enabled: { get_param: port_security_enabled }
+outputs:
+  ip:
+    description: Master IP of kubernetes cluster
+    value: {get_attr: [stack, ip]}
+
+  Floating_IP:
+    description: Public IP of Master
+    value: {get_attr: [stack, Floating_IP]}

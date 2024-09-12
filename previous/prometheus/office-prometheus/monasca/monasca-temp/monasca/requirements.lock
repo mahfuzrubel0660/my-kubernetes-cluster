@@ -1,0 +1,38 @@
+dependencies:
+- condition: ""
+  enabled: false
+  import-values: null
+  name: influxdb
+  repository: http://monasca.io/monasca-helm/
+  tags: null
+  version: 0.6.2-0.0.2
+- condition: ""
+  enabled: false
+  import-values: null
+  name: mysql
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  tags: null
+  version: 0.2.4
+- condition: ""
+  enabled: false
+  import-values: null
+  name: kafka
+  repository: http://monasca.io/monasca-helm/
+  tags: null
+  version: 0.4.2
+- condition: ""
+  enabled: false
+  import-values: null
+  name: storm
+  repository: http://monasca.io/monasca-helm/
+  tags: null
+  version: 0.5.3
+- condition: ""
+  enabled: false
+  import-values: null
+  name: zookeeper
+  repository: http://monasca.io/monasca-helm/
+  tags: null
+  version: 0.3.8
+digest: sha256:1298888d31b684909646716c65765183906f2376d48b5907951585935f0a06bf
+generated: 2018-04-24T22:26:05.093760257Z

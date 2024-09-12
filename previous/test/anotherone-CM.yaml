@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  var6: val6
+  var7: val7
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2021-04-08T13:57:03Z"
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:var6: {}
+        f:var7: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-04-08T13:57:03Z"
+  name: anotherone
+  namespace: test
+  resourceVersion: "22434330"
+  uid: fceaaae5-46c8-4799-b033-14373ff8017a

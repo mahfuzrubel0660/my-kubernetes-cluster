@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-sec
+  namespace: test
+spec:
+  containers:
+    - name: nginx-sec
+      image: nginx
+      envFrom:
+      - configMapRef:
+          name: anotherone

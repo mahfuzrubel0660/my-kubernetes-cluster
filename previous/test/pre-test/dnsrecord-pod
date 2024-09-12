@@ -1,0 +1,6 @@
+Server:    10.96.0.10
+Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
+
+Name:      192-168-30-109.test.pod
+Address 1: 192.168.30.109
+pod "busyboxdns" deleted

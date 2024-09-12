@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    stages {
+       stage('List Pods') {
+        steps {
+        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'k8s-secret', namespace: 'default', serverUrl: 'https://36.255.68.32:6443']]) {
+        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
+        sh 'chmod u+x ./kubectl' 
+        sh './kubectl get pod -A'
+    // some block
+}
+}
+}
+}
+}

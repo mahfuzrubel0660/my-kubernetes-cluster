@@ -1,0 +1,9 @@
+pod/calico-kube-controllers-744cfdf676-cj768
+pod/kube-apiserver-master
+pod/kube-controller-manager-master
+pod/kube-proxy-96vxb
+pod/kube-proxy-f5bvv
+pod/kube-proxy-gp7qj
+pod/kube-proxy-mlj9q
+pod/kube-proxy-mnbr4
+pod/kube-scheduler-master

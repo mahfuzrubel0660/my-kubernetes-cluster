@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openstack-conf 
+  labels:
+    name: openstack-conf
+  namespace: monitoring
+data:
+  clouds.yaml: |
+    clouds:
+      default:
+        region_name: RegionOne
+        identity_api_version: 3
+        identity_interface: public
+        auth:
+          username: admin
+          password: admin_pass
+          project_name: admin
+          project_domain_name: 'Default'
+          user_domain_name: 'Default'
+          auth_url: http://103.248.13.91:5000/v3
+          verify: false
+

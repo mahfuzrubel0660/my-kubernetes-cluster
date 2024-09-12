@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx-node-affinity
+  name: nginx-node-affinity
+  namespace: test
+spec:
+
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx-node-affinity
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx-node-affinity
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: color
+                operator: In
+                values:
+                - blue
+
+
+
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}

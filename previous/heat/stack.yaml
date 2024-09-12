@@ -1,0 +1,145 @@
+heat_template_version: 2017-02-24
+description: Deploy Kubernetes cluster with kubeadm
+
+parameters:
+    key_name:
+        type: string
+        label: Key Name
+        description: SSH key to be used for all instances
+    image:
+        type: string
+        label: Image
+        description: Image to be used
+        default: ubuntu-16-04-amd64-cloudimg    
+    master_flavor:
+        type: string
+        label: Master Instance Type
+        description: Type of instance (flavor) to deploy master node
+        default: m1.small
+    volume_type:
+        type: string
+        label: volume-type
+        description: bootable-volume
+        default: CEPH
+    slave_volume_type:
+        type: string
+        label: slave_volume_type
+        description: bootable-volume
+        default: CEPH
+
+    slave_count:
+        type: number
+        label: Slave Count
+        description: Number of slaves
+        default: 3
+    slave_flavor:
+        type: string
+        label: Slave Instance Type
+        description: Type of instance (flavor) to deploy slave nodes
+        default: m1.small
+    public_network_id:
+        type: string
+        description: ID of the public network
+        default: public
+    internal_net:
+        type: string
+        description: ID of the internal network
+        default: public
+    resource_prefix:
+        type: string
+        description: Prefix to add to all resources
+        default: k8s-
+    dns_nameservers:
+        type: comma_delimited_list
+        label: DNS Nameservers
+        description: DNS nameservers to use on nodes
+        default: 8.8.8.8
+    availability_zone:
+        type: string
+        label: Availability Zone
+        description: Availabilito zone to create nodes in
+    security_group:
+        type: string
+        label: Security Group
+        description: Security group to apply to nodes
+    master_volume_size:
+        type: number
+        default: 50
+    slave_volume_size:
+        type: number
+        default: 80
+    port_security_enabled:
+        type: string
+        description: port_security_enabled
+        default: enabled
+
+
+resources:
+    random_string:
+        type: OS::Heat::RandomString
+        properties:
+            length: 8
+            sequence: lowercase
+    ##### Master #####
+    master:
+        type: "https://raw.githubusercontent.com/munnaeebd/k8s-example-via-gui/master/node.yaml"
+        properties:
+            index: 0
+            key_name: { get_param: key_name }
+            image: { get_param: image }
+            flavor: { get_param: master_flavor }
+            public_network_id: { get_param: public_network_id }
+    #        additional_config: { get_resource: master_config }
+            availability_zone: { get_param: availability_zone }
+            volume_size: { get_param: master_volume_size }
+            name:
+                str_replace:
+                    template: $prefix$random-master
+                    params:
+                        $prefix: { get_param: resource_prefix }
+                        $random: { get_resource: random_string }
+            internal_net: { get_param: internal_net }
+            security_group: { get_param: security_group }
+            volume_type: { get_param: volume_type }
+            install_script: { get_file: "https://raw.githubusercontent.com/munnaeebd/k8s-example-via-gui/master/master.sh" }
+            port_security_enabled: { get_param: port_security_enabled }
+
+    ##### Slaves #####
+    slaves:
+        type: OS::Heat::ResourceGroup
+        properties:
+            count: { get_param: slave_count }
+            resource_def:
+                type: "https://raw.githubusercontent.com/munnaeebd/k8s-example-via-gui/master/slave-node.yaml"
+                properties:
+                    index: "%index%"
+                    key_name: { get_param: key_name }
+                    image: { get_param: image }
+                    flavor: { get_param: slave_flavor }
+                    public_network_id: { get_param: public_network_id }
+                    availability_zone: { get_param: availability_zone }
+                    volume_size: { get_param: slave_volume_size }
+                    name:
+                        str_replace:
+                            template: $prefix$random-slave-%index%
+                            params:
+                                $prefix: { get_param: resource_prefix }
+                                $random: { get_resource: random_string }
+                    internal_net: { get_param: internal_net }
+                    security_group: { get_param: security_group }
+                    slave_volume_type: { get_param: slave_volume_type }
+                    port_security_enabled: { get_param: port_security_enabled }
+                    install_script:
+                        str_replace:
+                            params:
+                                $master_ip: { get_attr: [ master, ip ] }
+                            template: { get_file: "https://raw.githubusercontent.com/munnaeebd/k8s-example-via-gui/master/slave.sh" }
+
+outputs:
+  ip:
+    description: Master IP of kubernetes cluster
+    value: {get_attr: [master, ip] }
+
+  Floating_IP:
+    description: Public IP of Master
+    value: {get_attr: [master, Floating_IP] }

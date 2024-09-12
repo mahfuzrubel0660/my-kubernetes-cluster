@@ -1,0 +1,16 @@
+#	vim default-backend-deployment.yaml 
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: alertmanager-ingress
+  namespace: monitoring
+spec:
+  rules:
+  - host: alertmanager.brilliant.com.bd
+    http:
+      paths:  
+      - backend:
+          serviceName: alertmanager
+          servicePort: 80

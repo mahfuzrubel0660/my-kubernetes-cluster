@@ -1,0 +1,37 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: app2
+  name: app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: app2
+    spec:
+      containers:
+      - image: mahfuzrubel0660/app2:1
+        name: app2
+        resources: {}
+        #        volumeMounts:
+        #       - name: index-configmap-#app2
+        #         mountPath: /usr/share/nginx/html/
+        #       ports:
+        #    - containerPort: 80
+        #    volumes:
+        #   - name: index-configmap-app2
+        #      configMap:
+        #       name: index-configmap-app2
+        #  nodeSelector:
+        #   kubernetes.io/hostname: worker02
+
+status: {}

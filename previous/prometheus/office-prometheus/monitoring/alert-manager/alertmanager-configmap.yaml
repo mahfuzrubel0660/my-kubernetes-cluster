@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-conf
+  labels:
+    name: alertmanager-conf
+  namespace: monitoring
+data:
+  alertmanager.yml: |
+    global:
+      smtp_smarthost: 'localhost:25'
+      smtp_from: 'alertmanager@brilliant.com.bd'
+      smtp_require_tls: false
+    route:
+      receiver: slack_receiver
+    receivers:
+    - name: slack_receiver
+      slack_configs:
+      - send_resolved: true
+        username: 'core.system@brilliant.com.bd'
+        api_url: 'https://hooks.slack.com/services/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'
+        channel: '#monitoring'

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ceph-etc
+  namespace: openstack
+data:
+  ceph.conf: |
+    [global]
+    mon_host = 10.10.10.20:6789,10.10.10.31:6789,10.10.10.14:6789
+

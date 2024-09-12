@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+spec: 
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      containers:
+      - image: mahfuzrubel0660/app1:1
+        imagePullPolicy: IfNotPresent
+        name: app1
+        volumentMounts
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d/
+    volumes:
+    - name: nginx-config
+      configMap:
+        name: nginx-config
