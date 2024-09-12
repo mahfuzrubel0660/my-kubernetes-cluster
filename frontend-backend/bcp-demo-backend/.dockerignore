@@ -1,0 +1,9 @@
+venv
+.venv
+env
+Dockerfile
+__pycache__
+.pytest_cache
+.coverage
+htmlcov
+migrations

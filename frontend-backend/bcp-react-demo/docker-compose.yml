@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  client:
+    image: cloudoperation/bcp-react-demo:0.1
+    restart: always
+    ports:
+      - 80:80
+  
