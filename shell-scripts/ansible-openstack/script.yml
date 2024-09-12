@@ -1,0 +1,83 @@
+---
+- name: Deploy Kubernetes Cluster on OpenStack
+  hosts: localhost
+  gather_facts: no
+  vars:
+    # OpenStack Authentication Details
+    os_auth_url: "http://<YOUR_OPENSTACK_AUTH_URL>/v3"
+    os_username: "<YOUR_OPENSTACK_USERNAME>"
+    os_password: "<YOUR_OPENSTACK_PASSWORD>"
+    os_project_name: "<YOUR_OPENSTACK_PROJECT_NAME>"
+    os_user_domain_name: "Default"
+    os_project_domain_name: "Default"
+    
+    # OpenStack VM Details
+    vm_image: "<IMAGE_NAME>"
+    vm_flavor: "<FLAVOR>"
+    vm_keypair: "<KEYPAIR_NAME>"
+    vm_network: "<NETWORK_NAME>"
+    vm_security_groups:
+      - "<SECURITY_GROUP>"
+
+    # Kubernetes Details
+    k8s_version: "1.21.0"
+    k8s_master_node: "master"
+    k8s_worker_nodes:
+      - "worker1"
+      - "worker2"
+
+  tasks:
+    - name: Provision VMs
+      os_server:
+        state: present
+        auth:
+          auth_url: "{{ os_auth_url }}"
+          username: "{{ os_username }}"
+          password: "{{ os_password }}"
+          project_name: "{{ os_project_name }}"
+          user_domain_name: "{{ os_user_domain_name }}"
+          project_domain_name: "{{ os_project_domain_name }}"
+        name: "{{ item }}"
+        image: "{{ vm_image }}"
+        flavor: "{{ vm_flavor }}"
+        key_name: "{{ vm_keypair }}"
+        network: "{{ vm_network }}"
+        security_groups: "{{ vm_security_groups }}"
+      with_items: "{{ k8s_worker_nodes + [k8s_master_node] }}"
+
+    - name: Wait for SSH to become available
+      wait_for:
+        host: "{{ item }}"
+        port: 22
+        state: started
+      with_items: "{{ k8s_worker_nodes + [k8s_master_node] }}"
+
+    - name: Install Dependencies
+      include_role:
+        name: geerlingguy.docker
+      vars:
+        docker_packages:
+          - docker-ce
+
+    - name: Configure Kubernetes Master
+      include_role:
+        name: geerlingguy.kubernetes
+      vars:
+        kubelet_service_state: started
+        kubelet_extra_args: "--node-ip={{ hostvars[k8s_master_node]['ansible_default_ipv4']['address'] }}"
+        kube_version: "{{ k8s_version }}"
+        kubernetes_extra_packages:
+          - kubectl
+          - kubeadm
+        kubernetes_network_plugin: calico
+        kubernetes_enable_dashboard: true
+        kubernetes_dashboard_bind_address: "0.0.0.0"
+      when: inventory_hostname == k8s_master_node
+
+    - name: Join Worker Nodes to Kubernetes Cluster
+      include_role:
+        name: geerlingguy.kubernetes
+      vars:
+        kube_version: "{{ k8s_version }}"
+        kubernetes_join_command: "{{ hostvars[k8s_master_node]['kubernetes_join_command'] }}"
+      when: inventory_hostname in k8s_worker_nodes

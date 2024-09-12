@@ -1,0 +1,1 @@
+docker run --name postgres-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=Br!ll!@nt-test -e POSTGRES_DB=api_dev -p 5432:5432  -v /data:/var/lib/postgresql/data  -d postgres:15-alpine

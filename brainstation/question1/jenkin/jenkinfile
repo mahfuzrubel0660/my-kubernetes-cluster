@@ -1,0 +1,58 @@
+
+pipeline {
+  environment {
+    registry = "mahfuzrubel0660/app1"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/mahfuzrubel0660/jenkin'
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+      }
+  }
+}
+
+
+
+
+pipeline {
+    agent any
+    stages {
+       stage('create deployment') {
+        steps {
+        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubecred', namespace: '', serverUrl: 'https://36.255.68.192:6443']]) {
+        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
+        sh 'chmod u+x ./kubectl'
+        sh './kubectl get deployment'
+        sh './kubectl delete deployment mahfuz-nginx'
+        sh './kubectl create deployment mahfuz-nginx --image=mahfuzrubel0660/app1:$BUILD_NUMBER'
+
+
+
+}
+}
+}
+}
+}
+
+

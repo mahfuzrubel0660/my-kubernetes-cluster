@@ -1,0 +1,53 @@
+# ansible compute22 -m shell -i openstack-inventory -a "systemctl restart monasca-agent.target"
+---
+- name: Monasca restart on compute node
+  hosts: ansible2
+  serial: 1
+  tasks:
+    - name: Add status script in /etc/bashrc
+      becomeuser: yes
+      blockinfile:
+        path: /etc/bashrc
+        #  backup: yes
+        insertafter: EOF
+        block: |
+               
+                  status()
+                  {
+                  echo "----------###############openstack-ceilometer-compute status#################------------";systemctl status openstack-ceilometer-compute.service ;
+                  echo
+                  echo
+                  echo "----------###############openstack-cinder-volume  status#############------------";systemctl status openstack-cinder-volume.service;
+                  echo
+                  echo
+                  echo "----------###############openstack-nova-compute.service  status##############------------";systemctl status openstack-nova-compute.service;
+                  echo
+                  echo
+                  echo "----------###############neutron-dhcp-agent status##############------------";systemctl status neutron-dhcp-agent.service;
+                  echo
+                  echo
+                  echo "----------###############neutron-l3-agen status#################------------";systemctl status neutron-l3-agent.service;
+                  echo
+                  echo
+                  echo "----------###############neutron-lbaasv2-agent status#############------------";systemctl status neutron-lbaasv2-agent.service;
+                  echo
+                  echo
+                  echo "----------###############neutron-metadata-agent status####################------------";systemctl status neutron-metadata-agent.service ;
+                  echo
+                  echo
+                  echo "----------###############neutron-openvswitch-agent status##############------------";systemctl status neutron-openvswitch-agent.service ;
+                  echo
+                  echo
+                  echo "----------###############ovs-delete-transient-ports status################------------";systemctl status ovs-delete-transient-ports.service;
+                  echo
+                  echo
+                  echo "----------###############ovs-vswitchd status##############------------";systemctl status ovs-vswitchd.service ;
+                  echo
+                  echo
+                  echo "----------###############ovsdb-server status##################------------";systemctl status ovsdb-server.service;
+                  echo
+                  echo
+                  echo "----------###############libvirtd status################------------";systemctl status libvirtd.service;
+                  echo
+                  echo
+                  }

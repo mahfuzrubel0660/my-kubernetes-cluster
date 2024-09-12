@@ -1,0 +1,17 @@
+# ansible compute22 -m shell -i openstack-inventory -a "systemctl restart monasca-agent.target"
+---
+- name: Monasca restart on compute node
+  hosts: ansible2
+  serial: 1
+  tasks:
+    - name: Add status script in /etc/bashrc
+      become: yes
+      blockinfile:
+        path: ~/.bashrc
+        insertafter: EOF
+        block: |
+                export HISTTIMEFORMAT="%F %T"
+    
+    - name: source the command
+      become: yes
+      shell: source ~/.bashrc

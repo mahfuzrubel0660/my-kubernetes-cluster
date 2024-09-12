@@ -1,0 +1,23 @@
+
+#kind: StorageClass
+#apiVersion: storage.k8s.io/v1
+#metadata:
+#  name: sc-cinder
+  #provisioner: kubernetes.io/cinder
+  #provisioner: cinder.csi.openstack.org
+  #parameters:
+        # availability: nova
+        #  type: SF-SSD
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sc-cinder
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+    #provisioner: kubernetes.io/cinder
+provisioner: cinder.csi.openstack.org
+parameters:
+  availability: nova
+  type: NVME
+  #fsType: ext4

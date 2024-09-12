@@ -1,0 +1,96 @@
+controller1 ansible_host=118.67.215.11 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+controller2 ansible_host=118.67.215.12 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+controller3 ansible_host=118.67.215.13 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+
+
+
+compute3 ansible_host=118.67.215.16 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute4 ansible_host=118.67.215.17 ansible_port=58923 ansible_connection=ssh ansible_user=root
+compute5 ansible_host=118.67.215.18 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute6 ansible_host=118.67.215.19 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute7 ansible_host=118.67.215.26 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute8 ansible_host=118.67.215.27 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute9 ansible_host=118.67.215.28 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute10 ansible_host=118.67.215.29 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute11 ansible_host=118.67.215.30 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute12 ansible_host=118.67.215.23 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute13 ansible_host=118.67.215.7 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute14 ansible_host=118.67.215.24 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute15 ansible_host=118.67.215.25 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute16 ansible_host=118.67.215.14 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute17 ansible_host=118.67.215.8 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute18 ansible_host=118.67.215.9 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute19 ansible_host=118.67.215.15 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute20 ansible_host=118.67.211.36 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute21 ansible_host=118.67.211.37 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute22 ansible_host=118.67.211.38 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute23 ansible_host=118.67.211.39 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+compute24 ansible_host=118.67.211.40 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+
+
+
+
+cephrgw1 ansible_host=118.67.215.20 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+cephrgw2 ansible_host=118.67.215.21 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+cephrgw3 ansible_host=118.67.215.22 ansible_port=58923 ansible_connection=ssh ansible_user=root 
+
+
+ansible1 ansible_host=36.255.69.183 ansible_port=58923 ansible_connection=ssh ansible_user=root ansible_password=Br!ll!@nt-mahfuz
+ansible2 ansible_host=36.255.69.184 ansible_port=22 ansible_connection=ssh ansible_user=root ansible_password=Br!ll!@nt-mahfuz
+
+
+
+
+
+[controller]
+
+controller1
+controller2
+controller3
+
+
+
+[compute]
+
+compute3
+compute4
+compute5
+compute6
+compute7
+compute8
+compute9
+compute10
+compute11
+compute12
+compute13
+compute14
+compute15
+compute16
+compute17
+compute18
+compute19
+compute20
+compute21
+compute22
+
+
+
+[cephrgw]
+
+cephrgw1
+cephrgw2
+cephrgw3
+
+
+[ansible]
+ansible1
+ansible2
+
+
+
+
+
+
+
+
+

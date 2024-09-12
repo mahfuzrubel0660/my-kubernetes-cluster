@@ -1,0 +1,8 @@
+---
+- name: Execute a command on localhost
+  hosts: all
+  connection: local
+  tasks:
+    - name: Execute a command
+      command: cat /etc/resolv.conf
+

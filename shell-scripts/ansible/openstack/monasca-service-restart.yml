@@ -1,0 +1,15 @@
+
+# ansible compute22 -m shell -i openstack-inventory -a "systemctl restart monasca-agent.target"
+---
+- name: Monasca restart on compute node 
+  hosts: all
+  serial: 1
+  tasks:
+    - name: Monasca restart on compute node
+      systemd:
+        name: "{{ item }}"
+        state: restarted
+        enabled: true
+      become: true
+      loop:
+      - monasca-agent.target
